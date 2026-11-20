@@ -2,8 +2,10 @@
 
 A cross-platform calorie, macro and fitness tracker built with **Expo + React Native + TypeScript**. Runs on Android, iOS and the web from one codebase, with an optional AI food scanner and coach powered by NVIDIA Nemotron.
 
+![NutriPulse on desktop](screenshots/desktop.png)
+
 <p align="center">
-  <img src="screenshots/home.png" alt="NutriPulse home screen" width="320">
+  <img src="screenshots/home.png" alt="NutriPulse on mobile" width="300">
 </p>
 
 ## Features
