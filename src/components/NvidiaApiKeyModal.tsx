@@ -11,7 +11,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors } from '../constants/theme';
+import { Colors, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 
 interface NvidiaApiKeyModalProps {
@@ -69,7 +69,7 @@ export const NvidiaApiKeyModal: React.FC<NvidiaApiKeyModalProps> = ({
           {/* Header Badge */}
           <View style={styles.badgeContainer}>
             <View style={styles.nvidiaBadge}>
-              <Ionicons name="hardware-chip" size={24} color="#76B900" />
+              <Ionicons name="hardware-chip" size={24} color="#C59BFF" />
             </View>
           </View>
 
@@ -84,7 +84,7 @@ export const NvidiaApiKeyModal: React.FC<NvidiaApiKeyModalProps> = ({
             onPress={handleOpenNvidiaWebsite}
             activeOpacity={0.8}
           >
-            <Ionicons name="open-outline" size={16} color="#76B900" />
+            <Ionicons name="open-outline" size={16} color="#C59BFF" />
             <Text style={styles.nvidiaLinkText}>Get Free Key at build.nvidia.com</Text>
           </TouchableOpacity>
 
@@ -113,14 +113,14 @@ export const NvidiaApiKeyModal: React.FC<NvidiaApiKeyModalProps> = ({
 
           {errorMsg && (
             <View style={styles.errorBanner}>
-              <Ionicons name="alert-circle" size={15} color="#EF4444" />
+              <Ionicons name="alert-circle" size={15} color="#FF6F61" />
               <Text style={styles.errorText}>{errorMsg}</Text>
             </View>
           )}
 
           {/* Security Note */}
           <View style={styles.securityNote}>
-            <Ionicons name="shield-checkmark-outline" size={14} color="#10B981" />
+            <Ionicons name="shield-checkmark-outline" size={14} color="#FFB547" />
             <Text style={styles.securityText}>
               Your API key is saved locally in app storage and used exclusively for food & calorie analysis.
             </Text>
@@ -157,7 +157,7 @@ export const NvidiaApiKeyModal: React.FC<NvidiaApiKeyModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    backgroundColor: 'rgba(10, 6, 14, 0.85)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -169,8 +169,8 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 22,
     borderWidth: 1.5,
-    borderColor: '#76B900',
-    shadowColor: '#76B900',
+    borderColor: '#C59BFF',
+    shadowColor: '#C59BFF',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.3,
     shadowRadius: 16,
@@ -184,47 +184,47 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 18,
-    backgroundColor: 'rgba(118, 185, 0, 0.15)',
+    backgroundColor: 'rgba(197, 155, 255, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1.5,
-    borderColor: '#76B900',
+    borderColor: '#C59BFF',
   },
   title: {
     fontSize: 20,
-    fontWeight: '900',
+    fontFamily: Fonts.display,
     color: Colors.dark.textPrimary,
     textAlign: 'center',
     marginBottom: 6,
   },
   description: {
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
     color: Colors.dark.textSecondary,
     textAlign: 'center',
     lineHeight: 18,
     marginBottom: 14,
   },
   highlight: {
-    color: '#76B900',
-    fontWeight: '800',
+    color: '#C59BFF',
+    fontFamily: Fonts.extrabold,
   },
   nvidiaLinkBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(118, 185, 0, 0.12)',
+    backgroundColor: 'rgba(197, 155, 255, 0.12)',
     borderRadius: 14,
     paddingVertical: 10,
     paddingHorizontal: 14,
     gap: 8,
     marginBottom: 14,
     borderWidth: 1,
-    borderColor: 'rgba(118, 185, 0, 0.3)',
+    borderColor: 'rgba(197, 155, 255, 0.3)',
   },
   nvidiaLinkText: {
-    color: '#76B900',
+    color: '#C59BFF',
     fontSize: 13,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
   },
   inputBox: {
     flexDirection: 'row',
@@ -241,22 +241,22 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: Colors.dark.textPrimary,
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
     padding: 0,
   },
   errorBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+    backgroundColor: 'rgba(255, 111, 97, 0.15)',
     borderRadius: 10,
     padding: 10,
     gap: 8,
     marginBottom: 10,
   },
   errorText: {
-    color: '#F87171',
+    color: '#FF8A7A',
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     flex: 1,
   },
   securityNote: {
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   securityText: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     flex: 1,
     lineHeight: 15,
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#76B900',
+    backgroundColor: '#C59BFF',
     borderRadius: 14,
     paddingVertical: 13,
     gap: 8,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   saveBtnText: {
     color: '#000000',
     fontSize: 14,
-    fontWeight: '900',
+    fontFamily: Fonts.black,
   },
   skipBtn: {
     alignItems: 'center',
@@ -299,6 +299,6 @@ const styles = StyleSheet.create({
   skipBtnText: {
     color: Colors.dark.textMuted,
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
   },
 });

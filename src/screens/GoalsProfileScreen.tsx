@@ -13,7 +13,7 @@ import {
   Image,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors, MACRO_COLORS } from '../constants/theme';
+import { Colors, MACRO_COLORS, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 import { ActivityLevel, DietType, GoalType } from '../types';
 import { ACTIVITY_LABELS, GOAL_LABELS } from '../utils/bmrCalculator';
@@ -104,7 +104,7 @@ export const GoalsProfileScreen: React.FC = () => {
                   <Ionicons
                     name={isLoggedIn ? 'cloud-done' : 'cloud-offline'}
                     size={11}
-                    color={isLoggedIn ? '#10B981' : '#F59E0B'}
+                    color={isLoggedIn ? '#FFB547' : '#FFB547'}
                   />
                   <Text style={[styles.statusBadgeText, isLoggedIn ? styles.statusBadgeTextOnline : styles.statusBadgeTextGuest]}>
                     {isLoggedIn ? 'Cloud Sync On' : 'Guest Account'}
@@ -124,7 +124,7 @@ export const GoalsProfileScreen: React.FC = () => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity style={styles.loginCtaBtn} onPress={openAuthModal} activeOpacity={0.8}>
-              <Ionicons name="cloud-upload-outline" size={16} color="#FFFFFF" />
+              <Ionicons name="cloud-upload-outline" size={16} color="#24160C" />
               <Text style={styles.loginCtaText}>Sign In / Register to Back Up Data</Text>
             </TouchableOpacity>
           )}
@@ -132,7 +132,7 @@ export const GoalsProfileScreen: React.FC = () => {
 
         {saveSuccess && (
           <View style={styles.successBanner}>
-            <Ionicons name="checkmark-circle" size={18} color="#10B981" />
+            <Ionicons name="checkmark-circle" size={18} color="#FFB547" />
             <Text style={styles.successText}>Targets and BMR updated successfully!</Text>
           </View>
         )}
@@ -187,7 +187,7 @@ export const GoalsProfileScreen: React.FC = () => {
         <View style={styles.nvidiaCard}>
           <View style={styles.nvidiaCardHeader}>
             <View style={styles.nvidiaIconBox}>
-              <Ionicons name="hardware-chip" size={20} color="#76B900" />
+              <Ionicons name="hardware-chip" size={20} color="#C59BFF" />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.nvidiaCardTitle}>NVIDIA Nemotron API Key</Text>
@@ -209,7 +209,7 @@ export const GoalsProfileScreen: React.FC = () => {
 
           <View style={styles.nvidiaActionsRow}>
             <TouchableOpacity style={styles.nvidiaLinkBtn} onPress={handleOpenNvidiaWebsite}>
-              <Ionicons name="open-outline" size={14} color="#76B900" />
+              <Ionicons name="open-outline" size={14} color="#C59BFF" />
               <Text style={styles.nvidiaLinkBtnText}>Get Key at build.nvidia.com</Text>
             </TouchableOpacity>
 
@@ -366,7 +366,7 @@ export const GoalsProfileScreen: React.FC = () => {
                   <Ionicons
                     name={isSelected ? 'checkmark-circle' : 'ellipse-outline'}
                     size={20}
-                    color={isSelected ? '#10B981' : Colors.dark.textMuted}
+                    color={isSelected ? '#FFB547' : Colors.dark.textMuted}
                   />
                 </TouchableOpacity>
               );
@@ -401,7 +401,7 @@ export const GoalsProfileScreen: React.FC = () => {
 
         {/* Save Button */}
         <TouchableOpacity style={styles.saveMainBtn} onPress={handleSaveProfile}>
-          <Ionicons name="save-outline" size={18} color="#FFFFFF" />
+          <Ionicons name="save-outline" size={18} color="#24160C" />
           <Text style={styles.saveMainBtnText}>Save & Recalculate Targets</Text>
         </TouchableOpacity>
 
@@ -414,7 +414,7 @@ export const GoalsProfileScreen: React.FC = () => {
               Alert.alert('Demo Seeded', 'Loaded 7 days of realistic nutrition and weight records!');
             }}
           >
-            <Ionicons name="refresh" size={16} color="#10B981" />
+            <Ionicons name="refresh" size={16} color="#FFB547" />
             <Text style={styles.demoBtnText}>Reload 7-Day Demo Records</Text>
           </TouchableOpacity>
 
@@ -427,7 +427,7 @@ export const GoalsProfileScreen: React.FC = () => {
               ]);
             }}
           >
-            <Ionicons name="trash-outline" size={16} color="#EF4444" />
+            <Ionicons name="trash-outline" size={16} color="#FF6F61" />
             <Text style={styles.dangerBtnText}>Reset Diary</Text>
           </TouchableOpacity>
         </View>
@@ -448,11 +448,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '800',
+    fontFamily: Fonts.display,
     color: Colors.dark.textPrimary,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -478,17 +478,17 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 22,
     borderWidth: 1.5,
-    borderColor: '#10B981',
+    borderColor: '#FFB547',
   },
   userAvatarPlaceholder: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+    backgroundColor: 'rgba(255, 181, 71, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1.5,
-    borderColor: '#10B981',
+    borderColor: '#FFB547',
   },
   userNameRow: {
     flexDirection: 'row',
@@ -497,11 +497,11 @@ const styles = StyleSheet.create({
   },
   accountName: {
     fontSize: 15,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   accountEmail: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -514,20 +514,20 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   statusBadgeOnline: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
   },
   statusBadgeGuest: {
-    backgroundColor: 'rgba(245, 158, 11, 0.15)',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
   },
   statusBadgeText: {
     fontSize: 10,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
   },
   statusBadgeTextOnline: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   statusBadgeTextGuest: {
-    color: '#F59E0B',
+    color: '#FFB547',
   },
   logoutBtn: {
     flexDirection: 'row',
@@ -543,14 +543,14 @@ const styles = StyleSheet.create({
   },
   logoutBtnText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   loginCtaBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 12,
     paddingVertical: 11,
     gap: 8,
@@ -558,23 +558,23 @@ const styles = StyleSheet.create({
   },
   loginCtaText: {
     fontSize: 13,
-    fontWeight: '800',
-    color: '#FFFFFF',
+    fontFamily: Fonts.extrabold,
+    color: '#24160C',
   },
   successBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
     borderRadius: 12,
     padding: 12,
     gap: 8,
     marginBottom: 14,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.3)',
+    borderColor: 'rgba(255, 181, 71, 0.3)',
   },
   successText: {
-    color: '#10B981',
-    fontWeight: '700',
+    color: '#FFB547',
+    fontFamily: Fonts.bold,
     fontSize: 13,
   },
   targetsCard: {
@@ -582,7 +582,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 16,
     borderWidth: 1.5,
-    borderColor: 'rgba(16, 185, 129, 0.3)',
+    borderColor: 'rgba(255, 181, 71, 0.3)',
     marginBottom: 18,
   },
   targetCardHeader: {
@@ -592,7 +592,7 @@ const styles = StyleSheet.create({
   },
   targetCardTitle: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     textTransform: 'uppercase',
   },
@@ -604,7 +604,7 @@ const styles = StyleSheet.create({
   },
   tdeePillText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
   },
   targetCaloriesRow: {
@@ -615,12 +615,12 @@ const styles = StyleSheet.create({
   },
   targetCaloriesNumber: {
     fontSize: 38,
-    fontWeight: '900',
-    color: '#10B981',
+    fontFamily: Fonts.display,
+    color: '#FFB547',
   },
   targetCaloriesUnit: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
   },
   macroPillsGrid: {
@@ -638,17 +638,17 @@ const styles = StyleSheet.create({
   },
   macroPillGrams: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
   },
   macroPillName: {
     fontSize: 10,
     color: Colors.dark.textMuted,
     marginTop: 2,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
   },
   sectionHeading: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
     marginBottom: 10,
     marginTop: 6,
@@ -658,7 +658,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     padding: 14,
     borderWidth: 1.5,
-    borderColor: '#76B900',
+    borderColor: '#C59BFF',
     marginBottom: 16,
   },
   nvidiaCardHeader: {
@@ -671,27 +671,27 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 12,
-    backgroundColor: 'rgba(118, 185, 0, 0.15)',
+    backgroundColor: 'rgba(197, 155, 255, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   nvidiaCardTitle: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   nvidiaCardSub: {
     fontSize: 11,
-    color: '#76B900',
+    color: '#C59BFF',
     marginTop: 1,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
   },
   nvidiaInput: {
     backgroundColor: Colors.dark.inputBg,
     borderRadius: 12,
     padding: 12,
     color: Colors.dark.textPrimary,
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
     borderWidth: 1,
     borderColor: Colors.dark.cardBorder,
     marginBottom: 10,
@@ -705,17 +705,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(118, 185, 0, 0.12)',
+    backgroundColor: 'rgba(197, 155, 255, 0.12)',
     borderRadius: 10,
     paddingVertical: 8,
     gap: 6,
     borderWidth: 1,
-    borderColor: 'rgba(118, 185, 0, 0.3)',
+    borderColor: 'rgba(197, 155, 255, 0.3)',
   },
   nvidiaLinkBtnText: {
     fontSize: 11,
-    fontWeight: '800',
-    color: '#76B900',
+    fontFamily: Fonts.extrabold,
+    color: '#C59BFF',
   },
   nvidiaModalBtn: {
     flexDirection: 'row',
@@ -729,7 +729,7 @@ const styles = StyleSheet.create({
   },
   nvidiaModalBtnText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textPrimary,
   },
   goalsContainer: {
@@ -755,11 +755,11 @@ const styles = StyleSheet.create({
   },
   goalTitle: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   goalSubtitle: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -773,7 +773,7 @@ const styles = StyleSheet.create({
   },
   cardSectionTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginBottom: 10,
   },
@@ -791,19 +791,19 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.cardBorder,
   },
   rateBtnActive: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
-    borderColor: '#10B981',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
+    borderColor: '#FFB547',
   },
   rateBtnTitle: {
     fontSize: 11,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textSecondary,
   },
   rateBtnTitleActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   rateBtnSub: {
-    fontSize: 9,
+    fontSize: 9, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -814,7 +814,7 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginBottom: 6,
   },
@@ -823,7 +823,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     color: Colors.dark.textPrimary,
-    fontSize: 14,
+    fontSize: 14, fontFamily: Fonts.regular,
     borderWidth: 1,
     borderColor: Colors.dark.cardBorder,
   },
@@ -842,16 +842,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.cardBorder,
   },
   genderBtnActive: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
-    borderColor: '#10B981',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
+    borderColor: '#FFB547',
   },
   genderBtnText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   genderBtnTextActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   activityOption: {
     flexDirection: 'row',
@@ -861,20 +861,20 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(255, 255, 255, 0.04)',
   },
   activityOptionActive: {
-    backgroundColor: 'rgba(16, 185, 129, 0.05)',
+    backgroundColor: 'rgba(255, 181, 71, 0.05)',
     paddingHorizontal: 8,
     borderRadius: 10,
   },
   activityTitle: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textPrimary,
   },
   activityTitleActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   activityDesc: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -892,19 +892,19 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.cardBorder,
   },
   dietCardActive: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
-    borderColor: '#10B981',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
+    borderColor: '#FFB547',
   },
   dietName: {
     fontSize: 12,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   dietNameActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   dietDesc: {
-    fontSize: 9,
+    fontSize: 9, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 3,
   },
@@ -912,15 +912,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 14,
     paddingVertical: 14,
     gap: 8,
     marginTop: 8,
   },
   saveMainBtnText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: '#24160C',
+    fontFamily: Fonts.extrabold,
     fontSize: 15,
   },
   dangerZone: {
@@ -942,12 +942,12 @@ const styles = StyleSheet.create({
   },
   demoBtnText: {
     fontSize: 11,
-    fontWeight: '700',
-    color: '#10B981',
+    fontFamily: Fonts.bold,
+    color: '#FFB547',
   },
   dangerBtnText: {
     fontSize: 11,
-    fontWeight: '700',
-    color: '#EF4444',
+    fontFamily: Fonts.bold,
+    color: '#FF6F61',
   },
 });

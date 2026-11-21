@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors, MACRO_COLORS } from '../constants/theme';
+import { Colors, MACRO_COLORS, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 import { AnalyticsChart } from '../components/AnalyticsChart';
 import { formatFriendlyDate, getPastNDays, getTodayISO } from '../utils/dateUtils';
@@ -73,7 +73,7 @@ export const HistoryScreen: React.FC<{ onNavigateToToday: () => void }> = ({
           }}
           activeOpacity={0.7}
         >
-          <Ionicons name="refresh" size={16} color="#10B981" />
+          <Ionicons name="refresh" size={16} color="#FFB547" />
         </TouchableOpacity>
       </View>
 
@@ -96,7 +96,7 @@ export const HistoryScreen: React.FC<{ onNavigateToToday: () => void }> = ({
         {/* Overview Scorecards */}
         <View style={styles.scorecardsRow}>
           <View style={styles.scorecard}>
-            <Ionicons name="flame" size={18} color="#10B981" />
+            <Ionicons name="flame" size={18} color="#FFB547" />
             <Text style={styles.scorecardVal}>
               {loggedDays.length ? Math.round(loggedDays.reduce((sum, s) => sum + s.consumedCalories, 0) / loggedDays.length) : 0}
             </Text>
@@ -107,7 +107,7 @@ export const HistoryScreen: React.FC<{ onNavigateToToday: () => void }> = ({
             <Ionicons
               name={profile.goalType === 'gain_weight' ? 'trending-up' : 'trending-down'}
               size={18}
-              color={profile.goalType === 'gain_weight' ? '#4ECDC4' : '#FF6B6B'}
+              color={profile.goalType === 'gain_weight' ? '#6FD3F2' : '#FF6F61'}
             />
             <Text style={styles.scorecardVal}>
               {profile.goalType === 'gain_weight' ? `+${Math.abs(avgDeficit)}` : `${avgDeficit}`}
@@ -118,7 +118,7 @@ export const HistoryScreen: React.FC<{ onNavigateToToday: () => void }> = ({
           </View>
 
           <View style={styles.scorecard}>
-            <Ionicons name="fitness" size={18} color="#6366F1" />
+            <Ionicons name="fitness" size={18} color="#FF6F8A" />
             <Text style={styles.scorecardVal}>
               {loggedDays.length ? Math.round(loggedDays.reduce((sum, s) => sum + s.consumedProtein, 0) / loggedDays.length) : 0}g
             </Text>
@@ -214,7 +214,7 @@ export const HistoryScreen: React.FC<{ onNavigateToToday: () => void }> = ({
                         style={styles.openDayBtn}
                         onPress={() => handleJumpToDay(dateStr)}
                       >
-                        <Ionicons name="create-outline" size={14} color="#10B981" />
+                        <Ionicons name="create-outline" size={14} color="#FFB547" />
                         <Text style={styles.openDayBtnText}>Edit / Open in Diary</Text>
                       </TouchableOpacity>
                     </View>
@@ -249,11 +249,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '800',
+    fontFamily: Fonts.display,
     color: Colors.dark.textPrimary,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 12,
-    backgroundColor: 'rgba(16, 185, 129, 0.12)',
+    backgroundColor: 'rgba(255, 181, 71, 0.12)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -285,15 +285,15 @@ const styles = StyleSheet.create({
   rangeBtnActive: {
     backgroundColor: Colors.dark.card,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.4)',
+    borderColor: 'rgba(255, 181, 71, 0.4)',
   },
   rangeBtnText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
   },
   rangeBtnTextActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   scorecardsRow: {
     flexDirection: 'row',
@@ -311,13 +311,13 @@ const styles = StyleSheet.create({
   },
   scorecardVal: {
     fontSize: 16,
-    fontWeight: '900',
+    fontFamily: Fonts.black,
     color: Colors.dark.textPrimary,
     marginTop: 6,
   },
   scorecardLabel: {
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -329,11 +329,11 @@ const styles = StyleSheet.create({
   },
   historySectionTitle: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   historySectionSub: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   dayRecordCardActive: {
-    borderColor: 'rgba(16, 185, 129, 0.4)',
+    borderColor: 'rgba(255, 181, 71, 0.4)',
   },
   dayRecordHeader: {
     flexDirection: 'row',
@@ -361,11 +361,11 @@ const styles = StyleSheet.create({
   },
   dayDateText: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   dayIsoText: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 1,
   },
@@ -375,16 +375,16 @@ const styles = StyleSheet.create({
   },
   dayKcalTotal: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: '#FFFFFF',
   },
   dayKcalLabel: {
     fontSize: 11,
-    fontWeight: '500',
+    fontFamily: Fonts.medium,
     color: Colors.dark.textMuted,
   },
   dayMacroSub: {
-    fontSize: 10,
+    fontSize: 10, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'rgba(255, 255, 255, 0.04)',
   },
   noDataText: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     fontStyle: 'italic',
     paddingVertical: 8,
@@ -411,27 +411,27 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   foodEmoji: {
-    fontSize: 18,
+    fontSize: 18, fontFamily: Fonts.regular,
   },
   foodItemName: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textPrimary,
   },
   foodItemServing: {
-    fontSize: 10,
+    fontSize: 10, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
   },
   foodItemCalories: {
     fontSize: 12,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   openDayBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+    backgroundColor: 'rgba(255, 181, 71, 0.1)',
     borderRadius: 10,
     paddingVertical: 8,
     marginTop: 8,
@@ -439,7 +439,7 @@ const styles = StyleSheet.create({
   },
   openDayBtnText: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#10B981',
+    fontFamily: Fonts.bold,
+    color: '#FFB547',
   },
 });

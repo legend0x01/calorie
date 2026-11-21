@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors } from '../constants/theme';
+import { Colors, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 
 export const ExerciseTracker: React.FC = () => {
@@ -36,18 +36,22 @@ export const ExerciseTracker: React.FC = () => {
       <View style={styles.headerRow}>
         <View style={styles.titleLeft}>
           <View style={styles.iconCircle}>
-            <Ionicons name="flame" size={18} color="#EF4444" />
+            <Ionicons name="flame" size={18} color="#FF6F61" />
           </View>
           <View>
-            <Text style={styles.title}>Exercise & Activity</Text>
+            <Text style={styles.title}>Activity</Text>
             <Text style={styles.subtitle}>
-              {dayLog.exercises.length} activities logged today
+              {dayLog.exercises.length === 0
+                ? 'Workouts and walks add to what you can eat'
+                : `${dayLog.exercises.length} logged · adds to your budget`}
             </Text>
           </View>
         </View>
 
         <View style={styles.counterRight}>
-          <Text style={styles.burnedAmount}>+{summary.burnedCalories}</Text>
+          <Text style={[styles.burnedAmount, summary.burnedCalories === 0 && { color: Colors.dark.textMuted }]}>
+            {summary.burnedCalories > 0 ? `+${summary.burnedCalories}` : '0'}
+          </Text>
           <Text style={styles.burnedLabel}> kcal</Text>
         </View>
       </View>
@@ -61,7 +65,7 @@ export const ExerciseTracker: React.FC = () => {
                 <Ionicons
                   name={ex.category === 'cardio' ? 'bicycle-outline' : ex.category === 'strength' ? 'barbell-outline' : 'walk-outline'}
                   size={16}
-                  color="#EF4444"
+                  color="#FF6F61"
                 />
                 <View>
                   <Text style={styles.exName}>{ex.name}</Text>
@@ -85,8 +89,8 @@ export const ExerciseTracker: React.FC = () => {
         onPress={() => setModalVisible(true)}
         activeOpacity={0.7}
       >
-        <Ionicons name="add" size={16} color="#EF4444" />
-        <Text style={styles.addBtnText}>Log Workout / Steps</Text>
+        <Ionicons name="add" size={16} color="#FF6F61" />
+        <Text style={styles.addBtnText}>Log a workout</Text>
       </TouchableOpacity>
 
       {/* Modal */}
@@ -173,10 +177,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 24,
     backgroundColor: Colors.dark.card,
-    borderRadius: 20,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: Colors.dark.cardBorder,
-    padding: 14,
+    padding: 16,
   },
   headerRow: {
     flexDirection: 'row',
@@ -191,19 +195,19 @@ const styles = StyleSheet.create({
   iconCircle: {
     width: 36,
     height: 36,
-    borderRadius: 12,
-    backgroundColor: 'rgba(239, 68, 68, 0.12)',
+    borderRadius: 18,
+    backgroundColor: 'rgba(255, 111, 97, 0.12)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 18,
+    fontFamily: Fonts.displayBold,
     color: Colors.dark.textPrimary,
   },
   subtitle: {
-    fontSize: 11,
-    fontWeight: '500',
+    fontSize: 12,
+    fontFamily: Fonts.medium,
     color: Colors.dark.textMuted,
     marginTop: 1,
   },
@@ -212,13 +216,13 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   burnedAmount: {
-    fontSize: 17,
-    fontWeight: '800',
-    color: '#EF4444',
+    fontSize: 22,
+    fontFamily: Fonts.display,
+    color: '#FF6F61',
   },
   burnedLabel: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textMuted,
   },
   list: {
@@ -241,11 +245,11 @@ const styles = StyleSheet.create({
   },
   exName: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textPrimary,
   },
   exDetails: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
   },
   exRight: {
@@ -255,29 +259,29 @@ const styles = StyleSheet.create({
   },
   exKcal: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#EF4444',
+    fontFamily: Fonts.bold,
+    color: '#FF6F61',
   },
   addBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(239, 68, 68, 0.09)',
+    backgroundColor: 'rgba(255, 111, 97, 0.09)',
     borderWidth: 1,
-    borderColor: 'rgba(239, 68, 68, 0.25)',
-    borderRadius: 12,
-    paddingVertical: 9,
+    borderColor: 'rgba(255, 111, 97, 0.22)',
+    borderRadius: 14,
+    paddingVertical: 10,
     marginTop: 10,
     gap: 6,
   },
   addBtnText: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#EF4444',
+    fontFamily: Fonts.bold,
+    color: '#FF6F61',
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    backgroundColor: 'rgba(10, 6, 14, 0.75)',
     justifyContent: 'flex-end',
   },
   modalContent: {
@@ -296,12 +300,12 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   sectionLabel: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginBottom: 8,
   },
@@ -321,12 +325,12 @@ const styles = StyleSheet.create({
   },
   presetText: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textPrimary,
   },
   inputLabel: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textSecondary,
     marginBottom: 6,
   },
@@ -335,7 +339,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     color: Colors.dark.textPrimary,
-    fontSize: 14,
+    fontSize: 14, fontFamily: Fonts.regular,
     borderWidth: 1,
     borderColor: Colors.dark.cardBorder,
     marginBottom: 12,
@@ -345,7 +349,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   saveBtn: {
-    backgroundColor: '#EF4444',
+    backgroundColor: '#FF6F61',
     borderRadius: 14,
     paddingVertical: 14,
     alignItems: 'center',
@@ -357,7 +361,7 @@ const styles = StyleSheet.create({
   },
   saveBtnText: {
     color: '#FFFFFF',
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     fontSize: 15,
   },
 });

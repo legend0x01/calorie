@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors } from '../constants/theme';
+import { Colors, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 import { formatDateToISO, getTodayISO, parseISODate } from '../utils/dateUtils';
 
@@ -121,7 +121,7 @@ export const CalendarDatePickerModal: React.FC<CalendarDatePickerModalProps> = (
                     <View
                       style={[
                         styles.dot,
-                        isSelected ? { backgroundColor: '#FFFFFF' } : { backgroundColor: '#10B981' },
+                        isSelected ? { backgroundColor: '#FFFFFF' } : { backgroundColor: '#FFB547' },
                       ]}
                     />
                   )}
@@ -139,7 +139,7 @@ export const CalendarDatePickerModal: React.FC<CalendarDatePickerModalProps> = (
                 onClose();
               }}
             >
-              <Ionicons name="today-outline" size={14} color="#10B981" />
+              <Ionicons name="today-outline" size={14} color="#FFB547" />
               <Text style={styles.todayBtnText}>Go to Today</Text>
             </TouchableOpacity>
           </View>
@@ -152,7 +152,7 @@ export const CalendarDatePickerModal: React.FC<CalendarDatePickerModalProps> = (
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    backgroundColor: 'rgba(10, 6, 14, 0.75)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   monthTitle: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   monthNav: {
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   },
   weekdayText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
     width: 36,
     textAlign: 'center',
@@ -224,24 +224,24 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   dayCellSelected: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
   },
   dayCellToday: {
     borderWidth: 1,
-    borderColor: '#10B981',
+    borderColor: '#FFB547',
   },
   dayText: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textPrimary,
   },
   dayTextSelected: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: '#24160C',
+    fontFamily: Fonts.extrabold,
   },
   dayTextToday: {
-    color: '#10B981',
-    fontWeight: '800',
+    color: '#FFB547',
+    fontFamily: Fonts.extrabold,
   },
   dot: {
     width: 4,
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   },
   todayBtnText: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#10B981',
+    fontFamily: Fonts.bold,
+    color: '#FFB547',
   },
 });

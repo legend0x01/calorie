@@ -12,7 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors } from '../constants/theme';
+import { Colors, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 
 interface AuthModalProps {
@@ -99,7 +99,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
             <View style={styles.headerBar}>
               <View style={styles.logoRow}>
                 <View style={styles.logoBadge}>
-                  <Ionicons name="flash" size={18} color="#10B981" />
+                  <Ionicons name="flash" size={18} color="#FFB547" />
                 </View>
                 <Text style={styles.logoTitle}>NutriPulse Cloud Auth</Text>
               </View>
@@ -211,7 +211,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
 
               {errorMsg && (
                 <View style={styles.errorBanner}>
-                  <Ionicons name="alert-circle" size={16} color="#EF4444" />
+                  <Ionicons name="alert-circle" size={16} color="#FF6F61" />
                   <Text style={styles.errorText}>{errorMsg}</Text>
                 </View>
               )}
@@ -224,13 +224,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
                 activeOpacity={0.8}
               >
                 {loading ? (
-                  <ActivityIndicator size="small" color="#FFFFFF" />
+                  <ActivityIndicator size="small" color="#24160C" />
                 ) : (
                   <>
                     <Ionicons
                       name={mode === 'signin' ? 'log-in-outline' : 'person-add-outline'}
                       size={18}
-                      color="#FFFFFF"
+                      color="#24160C"
                     />
                     <Text style={styles.mainSubmitBtnText}>
                       {mode === 'signin' ? 'Sign In & Sync Data' : 'Create Account'}
@@ -274,7 +274,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    backgroundColor: 'rgba(10, 6, 14, 0.85)',
     justifyContent: 'flex-end',
   },
   modalCard: {
@@ -303,13 +303,13 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 10,
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   logoTitle: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   closeBtn: {
@@ -332,19 +332,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   tabBtnActive: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
   },
   tabText: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
   },
   tabTextActive: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: '#24160C',
+    fontFamily: Fonts.extrabold,
   },
   welcomeText: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textSecondary,
     lineHeight: 17,
     marginBottom: 16,
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginBottom: 6,
   },
@@ -372,29 +372,29 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: Colors.dark.textPrimary,
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
     padding: 0,
   },
   errorBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+    backgroundColor: 'rgba(255, 111, 97, 0.15)',
     borderRadius: 10,
     padding: 10,
     gap: 8,
     marginVertical: 10,
   },
   errorText: {
-    color: '#F87171',
+    color: '#FF8A7A',
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     flex: 1,
   },
   mainSubmitBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 14,
     paddingVertical: 14,
     gap: 8,
@@ -405,8 +405,8 @@ const styles = StyleSheet.create({
   },
   mainSubmitBtnText: {
     fontSize: 15,
-    fontWeight: '800',
-    color: '#FFFFFF',
+    fontFamily: Fonts.extrabold,
+    color: '#24160C',
   },
   dividerRow: {
     flexDirection: 'row',
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
   },
   dividerText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
     marginHorizontal: 12,
   },
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
   },
   googleBtnText: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textPrimary,
   },
   guestBtn: {
@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
   },
   guestBtnText: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textMuted,
   },
 });

@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors, MACRO_COLORS } from '../constants/theme';
+import { Colors, MACRO_COLORS, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 import { ActivityLevel, DietType, GoalType } from '../types';
 import { calculateTargets, GOAL_LABELS } from '../utils/bmrCalculator';
@@ -143,7 +143,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ visible, onClo
 
                 <TouchableOpacity style={styles.nextBtn} onPress={() => setStep(2)}>
                   <Text style={styles.nextBtnText}>Continue</Text>
-                  <Ionicons name="arrow-forward" size={18} color="#FFFFFF" />
+                  <Ionicons name="arrow-forward" size={18} color="#24160C" />
                 </TouchableOpacity>
               </View>
             )}
@@ -212,7 +212,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ visible, onClo
                       <Ionicons
                         name={gen === 'male' ? 'male' : 'female'}
                         size={16}
-                        color={gender === gen ? '#10B981' : Colors.dark.textMuted}
+                        color={gender === gen ? '#FFB547' : Colors.dark.textMuted}
                       />
                       <Text style={[styles.genderChipText, gender === gen && styles.genderChipTextActive]}>
                         {gen === 'male' ? 'Male' : 'Female'}
@@ -227,7 +227,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ visible, onClo
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.nextBtnFlex} onPress={() => setStep(3)}>
                     <Text style={styles.nextBtnText}>Calculate Plan</Text>
-                    <Ionicons name="arrow-forward" size={18} color="#FFFFFF" />
+                    <Ionicons name="arrow-forward" size={18} color="#24160C" />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -298,7 +298,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ visible, onClo
                     <Text style={styles.backBtnText}>Back</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.finishBtn} onPress={handleFinish}>
-                    <Ionicons name="checkmark-circle" size={18} color="#FFFFFF" />
+                    <Ionicons name="checkmark-circle" size={18} color="#24160C" />
                     <Text style={styles.finishBtnText}>Start Tracking</Text>
                   </TouchableOpacity>
                 </View>
@@ -314,7 +314,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ visible, onClo
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(10, 6, 14, 0.8)',
     justifyContent: 'flex-end',
   },
   sheet: {
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   stepDotActive: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
   },
   stepLine: {
     width: 24,
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   stepLineActive: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
   },
   closeBtn: {
     width: 32,
@@ -369,12 +369,12 @@ const styles = StyleSheet.create({
   },
   stepTitle: {
     fontSize: 22,
-    fontWeight: '900',
+    fontFamily: Fonts.display,
     color: Colors.dark.textPrimary,
     letterSpacing: -0.5,
   },
   stepSubtitle: {
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 4,
     marginBottom: 20,
@@ -402,11 +402,11 @@ const styles = StyleSheet.create({
   },
   goalOptionTitle: {
     fontSize: 15,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   goalOptionSub: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
   },
   rateTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginBottom: 8,
   },
@@ -434,21 +434,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rateChipActive: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
   },
   rateChipText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   rateChipTextActive: {
-    color: '#FFFFFF',
+    color: '#24160C',
   },
   nextBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 14,
     paddingVertical: 14,
     gap: 8,
@@ -456,8 +456,8 @@ const styles = StyleSheet.create({
   },
   nextBtnText: {
     fontSize: 15,
-    fontWeight: '800',
-    color: '#FFFFFF',
+    fontFamily: Fonts.extrabold,
+    color: '#24160C',
   },
   inputGrid: {
     flexDirection: 'row',
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginBottom: 6,
   },
@@ -479,7 +479,7 @@ const styles = StyleSheet.create({
     padding: 12,
     color: Colors.dark.textPrimary,
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     borderWidth: 1,
     borderColor: Colors.dark.cardBorder,
   },
@@ -501,16 +501,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.cardBorder,
   },
   genderChipActive: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
-    borderColor: '#10B981',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
+    borderColor: '#FFB547',
   },
   genderChipText: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   genderChipTextActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   navRow: {
     flexDirection: 'row',
@@ -527,7 +527,7 @@ const styles = StyleSheet.create({
   },
   backBtnText: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   nextBtnFlex: {
@@ -535,7 +535,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 14,
     paddingVertical: 14,
     gap: 8,
@@ -545,24 +545,24 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 18,
     borderWidth: 2,
-    borderColor: '#10B981',
+    borderColor: '#FFB547',
     alignItems: 'center',
     marginBottom: 18,
   },
   resultKcalLabel: {
     fontSize: 11,
-    fontWeight: '800',
-    color: '#10B981',
+    fontFamily: Fonts.extrabold,
+    color: '#FFB547',
     letterSpacing: 1,
   },
   resultKcalNumber: {
     fontSize: 42,
-    fontWeight: '900',
+    fontFamily: Fonts.display,
     color: '#FFFFFF',
     marginVertical: 4,
   },
   resultTdeeSub: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginBottom: 14,
   },
@@ -581,11 +581,11 @@ const styles = StyleSheet.create({
   },
   resMacroGrams: {
     fontSize: 15,
-    fontWeight: '900',
+    fontFamily: Fonts.black,
   },
   resMacroName: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -601,30 +601,30 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.cardBorder,
   },
   dietChipActive: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
-    borderColor: '#10B981',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
+    borderColor: '#FFB547',
   },
   dietChipText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   dietChipTextActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   finishBtn: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 14,
     paddingVertical: 14,
     gap: 8,
   },
   finishBtnText: {
     fontSize: 15,
-    fontWeight: '800',
-    color: '#FFFFFF',
+    fontFamily: Fonts.extrabold,
+    color: '#24160C',
   },
 });

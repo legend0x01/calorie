@@ -10,7 +10,7 @@ import {
   FlatList,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors, MACRO_COLORS } from '../constants/theme';
+import { Colors, MACRO_COLORS, Fonts } from '../constants/theme';
 import { FoodItem, MealCategory } from '../types';
 import { FOOD_CATEGORIES, FOOD_DATABASE } from '../constants/foodDatabase';
 import { useNutri } from '../context/NutriContext';
@@ -158,13 +158,13 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({
             activeOpacity={0.8}
           >
             <View style={styles.aiBannerLeft}>
-              <Ionicons name="sparkles" size={18} color="#A78BFA" />
+              <Ionicons name="sparkles" size={18} color="#C59BFF" />
               <View>
                 <Text style={styles.aiBannerTitle}>Use AI Food Scanner</Text>
                 <Text style={styles.aiBannerDesc}>Snap meal photo or type natural description</Text>
               </View>
             </View>
-            <Ionicons name="chevron-forward" size={18} color="#A78BFA" />
+            <Ionicons name="chevron-forward" size={18} color="#C59BFF" />
           </TouchableOpacity>
 
           {/* Tabs */}
@@ -176,7 +176,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({
               <Ionicons
                 name="search-outline"
                 size={14}
-                color={activeTab === 'search' ? '#10B981' : Colors.dark.textMuted}
+                color={activeTab === 'search' ? '#FFB547' : Colors.dark.textMuted}
               />
               <Text style={[styles.tabText, activeTab === 'search' && styles.tabTextActive]}>
                 Database
@@ -190,7 +190,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({
               <Ionicons
                 name="flash-outline"
                 size={14}
-                color={activeTab === 'quick_cal' ? '#10B981' : Colors.dark.textMuted}
+                color={activeTab === 'quick_cal' ? '#FFB547' : Colors.dark.textMuted}
               />
               <Text style={[styles.tabText, activeTab === 'quick_cal' && styles.tabTextActive]}>
                 Quick Cal
@@ -204,7 +204,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({
               <Ionicons
                 name="add-outline"
                 size={14}
-                color={activeTab === 'custom_food' ? '#10B981' : Colors.dark.textMuted}
+                color={activeTab === 'custom_food' ? '#FFB547' : Colors.dark.textMuted}
               />
               <Text style={[styles.tabText, activeTab === 'custom_food' && styles.tabTextActive]}>
                 Custom Food
@@ -292,7 +292,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({
                       <Text style={styles.itemKcal}>{item.calories}</Text>
                       <Text style={styles.itemKcalUnit}>kcal</Text>
                       <View style={styles.addPlusIcon}>
-                        <Ionicons name="add" size={14} color="#10B981" />
+                        <Ionicons name="add" size={14} color="#FFB547" />
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -474,7 +474,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    backgroundColor: 'rgba(10, 6, 14, 0.75)',
     justifyContent: 'flex-end',
   },
   modalSheet: {
@@ -495,12 +495,12 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   modalSubtitle: {
     fontSize: 12,
-    fontWeight: '500',
+    fontFamily: Fonts.medium,
     color: Colors.dark.textMuted,
     marginTop: 1,
   },
@@ -516,9 +516,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(167, 139, 250, 0.12)',
+    backgroundColor: 'rgba(197, 155, 255, 0.12)',
     borderWidth: 1,
-    borderColor: 'rgba(167, 139, 250, 0.3)',
+    borderColor: 'rgba(197, 155, 255, 0.3)',
     marginHorizontal: 16,
     marginBottom: 12,
     padding: 12,
@@ -531,11 +531,11 @@ const styles = StyleSheet.create({
   },
   aiBannerTitle: {
     fontSize: 13,
-    fontWeight: '800',
-    color: '#A78BFA',
+    fontFamily: Fonts.extrabold,
+    color: '#C59BFF',
   },
   aiBannerDesc: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textSecondary,
     marginTop: 1,
   },
@@ -559,15 +559,15 @@ const styles = StyleSheet.create({
   tabActive: {
     backgroundColor: Colors.dark.card,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.4)',
+    borderColor: 'rgba(255, 181, 71, 0.4)',
   },
   tabText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
   },
   tabTextActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   tabContent: {
     flex: 1,
@@ -588,7 +588,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     color: Colors.dark.textPrimary,
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
   },
   categoryFilters: {
     paddingHorizontal: 16,
@@ -604,16 +604,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.cardBorder,
   },
   filterChipActive: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
-    borderColor: '#10B981',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
+    borderColor: '#FFB547',
   },
   filterChipText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
   },
   filterChipTextActive: {
-    color: '#10B981',
+    color: '#FFB547',
   },
   listContent: {
     paddingHorizontal: 16,
@@ -631,24 +631,24 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   foodEmoji: {
-    fontSize: 24,
+    fontSize: 24, fontFamily: Fonts.regular,
   },
   foodInfo: {
     flex: 1,
   },
   foodName: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textPrimary,
   },
   foodBrand: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 1,
   },
   foodMacros: {
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     marginTop: 3,
   },
   foodKcalCol: {
@@ -656,19 +656,19 @@ const styles = StyleSheet.create({
   },
   itemKcal: {
     fontSize: 15,
-    fontWeight: '900',
+    fontFamily: Fonts.black,
     color: '#FFFFFF',
   },
   itemKcalUnit: {
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textMuted,
   },
   addPlusIcon: {
     width: 22,
     height: 22,
     borderRadius: 11,
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 4,
@@ -679,7 +679,7 @@ const styles = StyleSheet.create({
   },
   formLabel: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginBottom: 6,
     marginTop: 8,
@@ -689,14 +689,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     color: Colors.dark.textPrimary,
-    fontSize: 14,
+    fontSize: 14, fontFamily: Fonts.regular,
     borderWidth: 1,
     borderColor: Colors.dark.cardBorder,
   },
   bigInput: {
     fontSize: 20,
-    fontWeight: '800',
-    color: '#10B981',
+    fontFamily: Fonts.display,
+    color: '#FFB547',
   },
   macroInputRow: {
     flexDirection: 'row',
@@ -705,11 +705,11 @@ const styles = StyleSheet.create({
   },
   macroSubLabel: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     marginBottom: 4,
   },
   submitBtn: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 14,
     paddingVertical: 14,
     alignItems: 'center',
@@ -719,8 +719,8 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   submitBtnText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: '#24160C',
+    fontFamily: Fonts.extrabold,
     fontSize: 15,
   },
 });

@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Text,
-  SafeAreaView,
-  StatusBar,
-  Platform,
-} from 'react-native';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Text, SafeAreaView, StatusBar } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors } from '../constants/theme';
+import { Colors, Fonts, Palette } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 import { MealCategory } from '../types';
 import { Header } from '../components/Header';
 import { DaySelector } from '../components/DaySelector';
-import { CalorieRings } from '../components/CalorieRings';
+import { TodayPlate, MacroBars } from '../components/TodayPlate';
 import { MealCard } from '../components/MealCard';
 import { WaterTracker } from '../components/WaterTracker';
 import { ExerciseTracker } from '../components/ExerciseTracker';
@@ -30,27 +21,36 @@ interface TodayScreenProps {
   onNavigateToHistory?: () => void;
 }
 
+const MEALS: MealCategory[] = ['breakfast', 'lunch', 'dinner', 'snacks'];
+
+// The meal someone is most likely logging right now.
+const mealForNow = (): MealCategory => {
+  const h = new Date().getHours();
+  if (h < 11) return 'breakfast';
+  if (h < 16) return 'lunch';
+  if (h < 22) return 'dinner';
+  return 'snacks';
+};
+
 export const TodayScreen: React.FC<TodayScreenProps> = ({
   onNavigateToProfile,
   onNavigateToAICoach,
   onNavigateToHistory,
 }) => {
-  const { summary, dayLog } = useNutri();
+  const { dayLog } = useNutri();
 
-  // Modals state
-  const [quickAddModalVisible, setQuickAddModalVisible] = useState(false);
-  const [selectedMealCategory, setSelectedMealCategory] = useState<MealCategory>('lunch');
+  const [quickAddVisible, setQuickAddVisible] = useState(false);
+  const [category, setCategory] = useState<MealCategory>(mealForNow());
   const [aiScannerVisible, setAiScannerVisible] = useState(false);
-  const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-  const [weightModalVisible, setWeightModalVisible] = useState(false);
+  const [calendarVisible, setCalendarVisible] = useState(false);
+  const [weightVisible, setWeightVisible] = useState(false);
 
-  const handleOpenAddFood = (category: MealCategory) => {
-    setSelectedMealCategory(category);
-    setQuickAddModalVisible(true);
+  const openAdd = (cat: MealCategory) => {
+    setCategory(cat);
+    setQuickAddVisible(true);
   };
-
-  const handleOpenAIScanner = (category: MealCategory) => {
-    setSelectedMealCategory(category);
+  const openAI = (cat: MealCategory) => {
+    setCategory(cat);
     setAiScannerVisible(true);
   };
 
@@ -58,125 +58,88 @@ export const TodayScreen: React.FC<TodayScreenProps> = ({
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.dark.bg} />
 
-      {/* App Header */}
-      <Header
-        onOpenCalendar={() => setCalendarModalVisible(true)}
-        onOpenProfile={onNavigateToProfile}
-        onOpenAICoach={onNavigateToAICoach}
-      />
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        <Header
+          onOpenCalendar={() => setCalendarVisible(true)}
+          onOpenProfile={onNavigateToProfile}
+          onOpenAICoach={onNavigateToAICoach}
+        />
+        <DaySelector />
 
-      {/* Day Ribbon Selector */}
-      <DaySelector />
+        <TodayPlate />
+        <MacroBars />
 
-      {/* Main Scrollable Content */}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {/* Hero Calorie & Macro Rings */}
-        <CalorieRings />
+        <TouchableOpacity
+          style={styles.aiCard}
+          onPress={() => openAI(mealForNow())}
+          activeOpacity={0.85}
+          accessibilityRole="button"
+          accessibilityLabel="Log a meal by describing it"
+        >
+          <View style={styles.aiIcon}>
+            <Ionicons name="sparkles" size={18} color={Palette.onMango} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.aiTitle}>Ate something? Describe it.</Text>
+            <Text style={styles.aiBody}>"Two eggs, toast and a coffee" becomes calories and macros.</Text>
+          </View>
+          <Ionicons name="arrow-forward" size={18} color={Palette.ube} />
+        </TouchableOpacity>
 
-        {/* Quick Check-in banner (Weight / Past records shortcut) */}
-        <View style={styles.quickBar}>
-          <TouchableOpacity
-            style={styles.quickBarItem}
-            onPress={() => setWeightModalVisible(true)}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="scale-outline" size={16} color="#10B981" />
-            <Text style={styles.quickBarText}>
-              {dayLog.weightKg ? `Weight: ${dayLog.weightKg} kg` : '+ Log Weight'}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.quickBarItem}
-            onPress={onNavigateToHistory}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="stats-chart-outline" size={16} color="#6366F1" />
-            <Text style={styles.quickBarText}>Past Records & Trends</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Meals Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Daily Meals</Text>
-          <Text style={styles.sectionSubtitle}>
-            {dayLog.foods.length} items logged
+          <Text style={styles.sectionTitle}>Meals</Text>
+          <Text style={styles.sectionMeta}>
+            {dayLog.foods.length === 0
+              ? 'Nothing logged yet'
+              : `${dayLog.foods.length} ${dayLog.foods.length === 1 ? 'item' : 'items'} logged`}
           </Text>
         </View>
 
-        <MealCard
-          category="breakfast"
-          onAddPress={handleOpenAddFood}
-          onAIScanPress={handleOpenAIScanner}
-        />
+        {MEALS.map(m => (
+          <MealCard key={m} category={m} onAddPress={openAdd} onAIScanPress={openAI} />
+        ))}
 
-        <MealCard
-          category="lunch"
-          onAddPress={handleOpenAddFood}
-          onAIScanPress={handleOpenAIScanner}
-        />
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Body</Text>
+        </View>
 
-        <MealCard
-          category="dinner"
-          onAddPress={handleOpenAddFood}
-          onAIScanPress={handleOpenAIScanner}
-        />
-
-        <MealCard
-          category="snacks"
-          onAddPress={handleOpenAddFood}
-          onAIScanPress={handleOpenAIScanner}
-        />
-
-        {/* Hydration Tracker */}
         <WaterTracker />
-
-        {/* Exercise / Activity Tracker */}
         <ExerciseTracker />
+
+        <View style={styles.linkRow}>
+          <TouchableOpacity style={styles.linkTile} onPress={() => setWeightVisible(true)} activeOpacity={0.75}>
+            <Ionicons name="scale-outline" size={18} color={Palette.avocado} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.linkLabel}>Weight</Text>
+              <Text style={styles.linkValue}>{dayLog.weightKg ? `${dayLog.weightKg} kg` : 'Log today'}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.linkTile} onPress={onNavigateToHistory} activeOpacity={0.75}>
+            <Ionicons name="trending-up" size={18} color={Palette.blueberry} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.linkLabel}>Trends</Text>
+              <Text style={styles.linkValue}>See your week</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
 
-      {/* Floating AI Scan Quick Action Button */}
-      <TouchableOpacity
-        style={styles.floatingFab}
-        onPress={() => {
-          setSelectedMealCategory('lunch');
-          setAiScannerVisible(true);
-        }}
-        activeOpacity={0.8}
-      >
-        <Ionicons name="sparkles" size={20} color="#FFFFFF" />
-        <Text style={styles.fabText}>AI Log</Text>
-      </TouchableOpacity>
-
-      {/* Modals */}
       <QuickAddModal
-        visible={quickAddModalVisible}
-        category={selectedMealCategory}
-        onClose={() => setQuickAddModalVisible(false)}
-        onOpenAIScan={(cat) => {
-          setSelectedMealCategory(cat);
+        visible={quickAddVisible}
+        category={category}
+        onClose={() => setQuickAddVisible(false)}
+        onOpenAIScan={cat => {
+          setCategory(cat);
           setAiScannerVisible(true);
         }}
       />
-
       <AIFoodScannerModal
         visible={aiScannerVisible}
-        initialCategory={selectedMealCategory}
+        initialCategory={category}
         onClose={() => setAiScannerVisible(false)}
       />
-
-      <CalendarDatePickerModal
-        visible={calendarModalVisible}
-        onClose={() => setCalendarModalVisible(false)}
-      />
-
-      <WeightLogModal
-        visible={weightModalVisible}
-        onClose={() => setWeightModalVisible(false)}
-      />
+      <CalendarDatePickerModal visible={calendarVisible} onClose={() => setCalendarVisible(false)} />
+      <WeightLogModal visible={weightVisible} onClose={() => setWeightVisible(false)} />
     </SafeAreaView>
   );
 };
@@ -187,70 +150,82 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.bg,
   },
   scrollContent: {
-    paddingBottom: 90,
+    paddingBottom: 120,
   },
-  quickBar: {
-    flexDirection: 'row',
-    gap: 10,
-    marginHorizontal: 16,
-    marginBottom: 14,
-  },
-  quickBarItem: {
-    flex: 1,
+  aiCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.dark.cardElevated,
-    borderRadius: 14,
-    paddingVertical: 10,
-    gap: 6,
+    gap: 12,
+    marginHorizontal: 16,
+    marginBottom: 8,
+    padding: 16,
+    borderRadius: 22,
+    backgroundColor: 'rgba(197, 155, 255, 0.10)',
     borderWidth: 1,
-    borderColor: Colors.dark.cardBorder,
+    borderColor: 'rgba(197, 155, 255, 0.28)',
   },
-  quickBarText: {
-    fontSize: 12,
-    fontWeight: '700',
+  aiIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: Palette.ube,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  aiTitle: {
+    fontFamily: Fonts.displayBold,
+    fontSize: 16,
+    color: Colors.dark.textPrimary,
+  },
+  aiBody: {
+    fontFamily: Fonts.regular,
+    fontSize: 13,
     color: Colors.dark.textSecondary,
+    marginTop: 2,
   },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'baseline',
     justifyContent: 'space-between',
     marginHorizontal: 20,
-    marginBottom: 8,
+    marginTop: 22,
+    marginBottom: 10,
   },
   sectionTitle: {
-    fontSize: 15,
-    fontWeight: '800',
+    fontFamily: Fonts.display,
+    fontSize: 24,
+    letterSpacing: -0.5,
     color: Colors.dark.textPrimary,
   },
-  sectionSubtitle: {
-    fontSize: 12,
-    fontWeight: '500',
+  sectionMeta: {
+    fontFamily: Fonts.medium,
+    fontSize: 13,
     color: Colors.dark.textMuted,
   },
-  floatingFab: {
-    position: 'absolute',
-    bottom: 24,
-    right: 20,
+  linkRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginHorizontal: 16,
+  },
+  linkTile: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#7C3AED',
-    paddingVertical: 12,
-    paddingHorizontal: 18,
-    borderRadius: 28,
-    gap: 8,
-    shadowColor: '#7C3AED',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.45,
-    shadowRadius: 12,
-    elevation: 8,
+    gap: 12,
+    padding: 14,
+    borderRadius: 20,
+    backgroundColor: Colors.dark.card,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: Colors.dark.cardBorder,
   },
-  fabText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+  linkLabel: {
+    fontFamily: Fonts.medium,
+    fontSize: 12,
+    color: Colors.dark.textMuted,
+  },
+  linkValue: {
+    fontFamily: Fonts.bold,
     fontSize: 14,
+    color: Colors.dark.textPrimary,
   },
 });

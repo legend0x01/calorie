@@ -13,7 +13,7 @@ import {
   Platform,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors } from '../constants/theme';
+import { Colors, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 import { AIChatMessage } from '../types';
 import { getNutritionCoachResponse } from '../services/aiService';
@@ -103,7 +103,7 @@ export const AICoachScreen: React.FC = () => {
       <View style={styles.header}>
         <View style={styles.titleRow}>
           <View style={styles.aiBadge}>
-            <Ionicons name="sparkles" size={18} color="#A78BFA" />
+            <Ionicons name="sparkles" size={18} color="#C59BFF" />
           </View>
           <View>
             <Text style={styles.title}>AI Nutrition Coach</Text>
@@ -139,14 +139,14 @@ export const AICoachScreen: React.FC = () => {
             onPress={() => setAiScannerVisible(true)}
             activeOpacity={0.8}
           >
-            <Ionicons name="scan-circle" size={32} color="#A78BFA" />
+            <Ionicons name="scan-circle" size={32} color="#C59BFF" />
             <View style={{ flex: 1 }}>
               <Text style={styles.bannerTitle}>AI Food & Photo Vision Scanner</Text>
               <Text style={styles.bannerDesc}>
                 Snap meal photos to automatically compute calories & macros with 95% accuracy.
               </Text>
             </View>
-            <Ionicons name="chevron-forward" size={18} color="#A78BFA" />
+            <Ionicons name="chevron-forward" size={18} color="#C59BFF" />
           </TouchableOpacity>
 
           {/* Quick suggestions */}
@@ -179,7 +179,7 @@ export const AICoachScreen: React.FC = () => {
               >
                 {!isUser && (
                   <View style={styles.botAvatar}>
-                    <Ionicons name="sparkles" size={14} color="#A78BFA" />
+                    <Ionicons name="sparkles" size={14} color="#C59BFF" />
                   </View>
                 )}
                 <View
@@ -203,7 +203,7 @@ export const AICoachScreen: React.FC = () => {
 
           {loading && (
             <View style={styles.loadingBubble}>
-              <ActivityIndicator size="small" color="#A78BFA" />
+              <ActivityIndicator size="small" color="#C59BFF" />
               <Text style={styles.loadingText}>AI Nutrition Coach is thinking...</Text>
             </View>
           )}
@@ -265,23 +265,23 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 12,
-    backgroundColor: 'rgba(167, 139, 250, 0.15)',
+    backgroundColor: 'rgba(197, 155, 255, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
     fontSize: 18,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   subtitle: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
   },
   scanBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#7C3AED',
+    backgroundColor: '#8A5CF0',
     paddingHorizontal: 12,
     paddingVertical: 7,
     borderRadius: 12,
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   },
   scanBtnText: {
     color: '#FFFFFF',
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     fontSize: 12,
   },
   chatContent: {
@@ -309,11 +309,11 @@ const styles = StyleSheet.create({
   },
   bannerTitle: {
     fontSize: 13,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: '#C4B5FD',
   },
   bannerDesc: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textSecondary,
     marginTop: 2,
   },
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
   },
   quickPromptsTitle: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
     marginBottom: 8,
     textTransform: 'uppercase',
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
   },
   promptChipText: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textPrimary,
   },
   messageBubbleContainer: {
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: 'rgba(167, 139, 250, 0.15)',
+    backgroundColor: 'rgba(197, 155, 255, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   messageBubbleUser: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderBottomRightRadius: 4,
   },
   messageBubbleAssistant: {
@@ -381,12 +381,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
   },
   messageText: {
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
     lineHeight: 19,
   },
   messageTextUser: {
-    color: '#FFFFFF',
-    fontWeight: '600',
+    color: '#24160C',
+    fontFamily: Fonts.semibold,
   },
   messageTextAssistant: {
     color: Colors.dark.textPrimary,
@@ -402,14 +402,15 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   loadingText: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textSecondary,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingTop: 10,
+    paddingBottom: 96, // clears the floating tab dock
     backgroundColor: Colors.dark.bg,
     borderTopWidth: 1,
     borderTopColor: 'rgba(255, 255, 255, 0.06)',
@@ -422,14 +423,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     color: Colors.dark.textPrimary,
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
     maxHeight: 80,
   },
   sendBtn: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#7C3AED',
+    backgroundColor: '#8A5CF0',
     alignItems: 'center',
     justifyContent: 'center',
   },

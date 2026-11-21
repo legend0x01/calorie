@@ -21,13 +21,13 @@ export const GOAL_LABELS: Record<GoalType, { title: string; subtitle: string; ic
     title: 'Lose Weight',
     subtitle: 'Cut body fat while preserving lean muscle',
     icon: 'flame-outline',
-    color: '#FF6B6B',
+    color: '#FF6F61',
   },
   gain_weight: {
     title: 'Gain Weight & Muscle',
     subtitle: 'Build muscle mass & strength with calorie surplus',
     icon: 'barbell-outline',
-    color: '#4ECDC4',
+    color: '#6FD3F2',
   },
   maintain_weight: {
     title: 'Maintain Weight',

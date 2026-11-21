@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors } from '../constants/theme';
+import { Colors, Fonts } from '../constants/theme';
 import { useNutri } from '../context/NutriContext';
 import { formatFriendlyDate } from '../utils/dateUtils';
 
@@ -55,7 +55,7 @@ export const WeightLogModal: React.FC<WeightLogModalProps> = ({ visible, onClose
             <Ionicons
               name={profile.goalType === 'gain_weight' ? 'trending-up' : 'trending-down'}
               size={20}
-              color="#10B981"
+              color="#FFB547"
             />
             <View style={{ flex: 1 }}>
               <Text style={styles.goalBannerTitle}>
@@ -129,7 +129,7 @@ export const WeightLogModal: React.FC<WeightLogModalProps> = ({ visible, onClose
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    backgroundColor: 'rgba(10, 6, 14, 0.75)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -151,11 +151,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -170,21 +170,21 @@ const styles = StyleSheet.create({
   goalBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(16, 185, 129, 0.12)',
+    backgroundColor: 'rgba(255, 181, 71, 0.12)',
     borderRadius: 14,
     padding: 12,
     gap: 10,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.25)',
+    borderColor: 'rgba(255, 181, 71, 0.25)',
     marginBottom: 16,
   },
   goalBannerTitle: {
     fontSize: 13,
-    fontWeight: '800',
-    color: '#10B981',
+    fontFamily: Fonts.extrabold,
+    color: '#FFB547',
   },
   goalBannerSub: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textSecondary,
     marginTop: 1,
   },
@@ -196,14 +196,14 @@ const styles = StyleSheet.create({
   },
   weightInput: {
     fontSize: 48,
-    fontWeight: '900',
+    fontFamily: Fonts.display,
     color: Colors.dark.textPrimary,
     textAlign: 'center',
     minWidth: 140,
   },
   unitText: {
     fontSize: 20,
-    fontWeight: '700',
+    fontFamily: Fonts.displayBold,
     color: Colors.dark.textMuted,
     marginLeft: 6,
   },
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
   stepBtnText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   notesInput: {
@@ -231,20 +231,20 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     color: Colors.dark.textPrimary,
-    fontSize: 13,
+    fontSize: 13, fontFamily: Fonts.regular,
     borderWidth: 1,
     borderColor: Colors.dark.cardBorder,
     marginBottom: 16,
   },
   saveBtn: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 14,
     paddingVertical: 14,
     alignItems: 'center',
   },
   saveBtnText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: '#24160C',
+    fontFamily: Fonts.extrabold,
     fontSize: 15,
   },
 });

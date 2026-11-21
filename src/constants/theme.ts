@@ -1,94 +1,141 @@
-export const Colors = {
-  // Dark luxury theme default
-  dark: {
-    bg: '#0B0F19',
-    card: '#131B2E',
-    cardElevated: '#1C2742',
-    cardBorder: 'rgba(255, 255, 255, 0.08)',
-    textPrimary: '#F8FAFC',
-    textSecondary: '#94A3B8',
-    textMuted: '#64748B',
-    accent: '#10B981', // emerald
-    accentLight: '#34D399',
-    accentDark: '#059669',
-    accentGlow: 'rgba(16, 185, 129, 0.25)',
-    
-    // Macro colors
-    calories: '#10B981', // Emerald
-    protein: '#6366F1', // Indigo / Purple
-    carbs: '#F59E0B', // Amber
-    fat: '#EC4899', // Pink / Rose
-    water: '#06B6D4', // Cyan
-    burn: '#EF4444', // Red
+// NutriPulse "night kitchen" palette: a warm aubergine base with produce
+// colours for the data. Each macro is named after a food that is rich in it,
+// so the colour carries meaning (pomegranate = protein, blueberry = carbs,
+// avocado = fat, coconut water = hydration, mango = your calorie budget).
+export const Palette = {
+  aubergine: '#140E1A', // page background
+  plumSkin: '#1F1726', // cards
+  plumFlesh: '#2A2033', // raised surfaces, inputs
+  ricePaper: '#FBF3EA', // primary text
+  mango: '#FFB547', // calories, primary actions
+  mangoDeep: '#E8932A',
+  pomegranate: '#FF6F8A', // protein
+  blueberry: '#8EA4FF', // carbs
+  avocado: '#9ED36A', // fat
+  coconut: '#6FD3F2', // water
+  chili: '#FF6F61', // burned calories, over budget, delete
+  ube: '#C59BFF', // AI features
+  ubeDeep: '#8A5CF0',
+  onMango: '#24160C', // text on mango buttons
+};
 
-    // UI elements
-    inputBg: '#1A233A',
-    modalBg: '#101626',
-    tabBar: '#0B0F19',
-    tabBarBorder: '#1E293B',
-    badgeSuccess: '#064E3B',
-    badgeWarning: '#78350F',
-    badgeError: '#7F1D1D',
+export const Colors = {
+  dark: {
+    bg: Palette.aubergine,
+    card: Palette.plumSkin,
+    cardElevated: Palette.plumFlesh,
+    cardBorder: 'rgba(255, 228, 200, 0.08)',
+    textPrimary: Palette.ricePaper,
+    textSecondary: '#C2B4C6',
+    textMuted: '#8A7A93',
+    accent: Palette.mango,
+    accentLight: '#FFCB7A',
+    accentDark: Palette.mangoDeep,
+    accentGlow: 'rgba(255, 181, 71, 0.22)',
+    onAccent: Palette.onMango,
+
+    calories: Palette.mango,
+    protein: Palette.pomegranate,
+    carbs: Palette.blueberry,
+    fat: Palette.avocado,
+    water: Palette.coconut,
+    burn: Palette.chili,
+    ai: Palette.ube,
+
+    inputBg: '#251C2D',
+    modalBg: '#1A1320',
+    tabBar: Palette.plumSkin,
+    tabBarBorder: 'rgba(255, 228, 200, 0.08)',
+    badgeSuccess: 'rgba(158, 211, 106, 0.16)',
+    badgeWarning: 'rgba(255, 181, 71, 0.16)',
+    badgeError: 'rgba(255, 111, 97, 0.16)',
   },
   light: {
-    bg: '#F8FAFC',
+    bg: '#FBF6F0',
     card: '#FFFFFF',
-    cardElevated: '#F1F5F9',
-    cardBorder: 'rgba(0, 0, 0, 0.06)',
-    textPrimary: '#0F172A',
-    textSecondary: '#475569',
-    textMuted: '#94A3B8',
-    accent: '#059669',
-    accentLight: '#10B981',
-    accentDark: '#047857',
-    accentGlow: 'rgba(16, 185, 129, 0.15)',
+    cardElevated: '#F4ECE4',
+    cardBorder: 'rgba(40, 20, 50, 0.08)',
+    textPrimary: '#1E1424',
+    textSecondary: '#5B4B62',
+    textMuted: '#8A7A93',
+    accent: Palette.mangoDeep,
+    accentLight: Palette.mango,
+    accentDark: '#C47414',
+    accentGlow: 'rgba(232, 147, 42, 0.15)',
+    onAccent: Palette.onMango,
 
-    calories: '#059669',
-    protein: '#4F46E5',
-    carbs: '#D97706',
-    fat: '#DB2777',
-    water: '#0284C7',
-    burn: '#DC2626',
+    calories: Palette.mangoDeep,
+    protein: '#E04F6C',
+    carbs: '#5D74E0',
+    fat: '#6FA83C',
+    water: '#2BA6CC',
+    burn: '#E04A3C',
+    ai: Palette.ubeDeep,
 
-    inputBg: '#F1F5F9',
+    inputBg: '#F4ECE4',
     modalBg: '#FFFFFF',
     tabBar: '#FFFFFF',
-    tabBarBorder: '#E2E8F0',
-    badgeSuccess: '#D1FAE5',
-    badgeWarning: '#FEF3C7',
-    badgeError: '#FEE2E2',
+    tabBarBorder: 'rgba(40, 20, 50, 0.08)',
+    badgeSuccess: '#E6F4D8',
+    badgeWarning: '#FFF0D6',
+    badgeError: '#FFE1DD',
   },
 };
 
+// Figtree for reading, Bricolage Grotesque for numbers and headlines.
+// Each weight is its own family so Android and web never fake a bold.
+export const Fonts = {
+  regular: 'Figtree_400Regular',
+  medium: 'Figtree_500Medium',
+  semibold: 'Figtree_600SemiBold',
+  bold: 'Figtree_700Bold',
+  extrabold: 'Figtree_800ExtraBold',
+  black: 'Figtree_900Black',
+  displayMedium: 'BricolageGrotesque_600SemiBold',
+  displayBold: 'BricolageGrotesque_700Bold',
+  display: 'BricolageGrotesque_800ExtraBold',
+};
+
+// Meals run from dawn to night: each meal's slice of the plate, its dot on
+// the meal card and its legend chip share one colour.
+export const MEAL_COLORS = {
+  breakfast: '#FFE0A3',
+  lunch: Palette.mango,
+  dinner: '#FF8A5B',
+  snacks: '#B596E8',
+} as const;
+
+const tint = (rgb: string, a: number) => `rgba(${rgb}, ${a})`;
+
 export const MACRO_COLORS = {
   calories: {
-    primary: '#10B981',
-    gradient: ['#10B981', '#059669'] as const,
-    bg: 'rgba(16, 185, 129, 0.12)',
+    primary: Palette.mango,
+    gradient: ['#FFCB7A', Palette.mango] as const,
+    bg: tint('255, 181, 71', 0.14),
   },
   protein: {
-    primary: '#6366F1',
-    gradient: ['#818CF8', '#6366F1'] as const,
-    bg: 'rgba(99, 102, 241, 0.12)',
+    primary: Palette.pomegranate,
+    gradient: ['#FF93A8', Palette.pomegranate] as const,
+    bg: tint('255, 111, 138', 0.14),
   },
   carbs: {
-    primary: '#F59E0B',
-    gradient: ['#FBBF24', '#F59E0B'] as const,
-    bg: 'rgba(245, 158, 11, 0.12)',
+    primary: Palette.blueberry,
+    gradient: ['#B3C2FF', Palette.blueberry] as const,
+    bg: tint('142, 164, 255', 0.14),
   },
   fat: {
-    primary: '#EC4899',
-    gradient: ['#F472B6', '#EC4899'] as const,
-    bg: 'rgba(236, 72, 153, 0.12)',
+    primary: Palette.avocado,
+    gradient: ['#BDE592', Palette.avocado] as const,
+    bg: tint('158, 211, 106', 0.14),
   },
   water: {
-    primary: '#06B6D4',
-    gradient: ['#22D3EE', '#06B6D4'] as const,
-    bg: 'rgba(6, 182, 212, 0.12)',
+    primary: Palette.coconut,
+    gradient: ['#A3E4F7', Palette.coconut] as const,
+    bg: tint('111, 211, 242', 0.14),
   },
   burn: {
-    primary: '#EF4444',
-    gradient: ['#F87171', '#EF4444'] as const,
-    bg: 'rgba(239, 68, 68, 0.12)',
+    primary: Palette.chili,
+    gradient: ['#FF9A8F', Palette.chili] as const,
+    bg: tint('255, 111, 97', 0.14),
   },
 };

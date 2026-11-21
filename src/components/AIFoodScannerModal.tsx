@@ -12,7 +12,7 @@ import {
   Image,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors, MACRO_COLORS } from '../constants/theme';
+import { Colors, MACRO_COLORS, Fonts } from '../constants/theme';
 import { AIAnalysisResult, FoodItem, MealCategory } from '../types';
 import { analyzeFoodWithAI } from '../services/aiService';
 import { PRESET_MEAL_IMAGES } from '../constants/foodDatabase';
@@ -117,7 +117,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
           <View style={styles.topBar}>
             <View style={styles.titleRow}>
               <View style={styles.aiBadge}>
-                <Ionicons name="sparkles" size={16} color="#A78BFA" />
+                <Ionicons name="sparkles" size={16} color="#C59BFF" />
               </View>
               <View>
                 <Text style={styles.sheetTitle}>AI Calorie Scanner</Text>
@@ -132,7 +132,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollBody}>
             {/* NVIDIA API Key Status pill */}
             <TouchableOpacity style={styles.nvidiaStatusPill} onPress={openApiKeyModal} activeOpacity={0.8}>
-              <Ionicons name="hardware-chip" size={15} color={nvidiaApiKey ? '#76B900' : Colors.dark.textMuted} />
+              <Ionicons name="hardware-chip" size={15} color={nvidiaApiKey ? '#C59BFF' : Colors.dark.textMuted} />
               <Text style={styles.nvidiaStatusText}>
                 {nvidiaApiKey ? 'NVIDIA Nemotron AI Brain Active' : 'Configure NVIDIA API Key'}
               </Text>
@@ -165,7 +165,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
             {/* Input Box */}
             <View style={styles.inputCard}>
               <View style={styles.inputHeader}>
-                <Ionicons name="create-outline" size={16} color="#A78BFA" />
+                <Ionicons name="create-outline" size={16} color="#C59BFF" />
                 <Text style={styles.inputHeaderTitle}>Describe your food or ingredients</Text>
               </View>
               <TextInput
@@ -204,7 +204,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
 
             {errorMsg && (
               <View style={styles.errorBanner}>
-                <Ionicons name="alert-circle" size={16} color="#EF4444" />
+                <Ionicons name="alert-circle" size={16} color="#FF6F61" />
                 <Text style={styles.errorText}>{errorMsg}</Text>
               </View>
             )}
@@ -249,7 +249,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
 
                 {/* Macro summary pills */}
                 <View style={styles.macroPillRow}>
-                  <View style={[styles.macroPill, { borderColor: '#10B981' }]}>
+                  <View style={[styles.macroPill, { borderColor: '#FFB547' }]}>
                     <Text style={styles.macroPillKcal}>
                       {Math.round(result.estimatedCalories * servingMultiplier)}
                     </Text>
@@ -310,7 +310,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
                     <Text style={styles.ingredientsTitle}>Detected Ingredients Breakdown</Text>
                     {result.ingredients.map((ing, i) => (
                       <View key={i} style={styles.ingRow}>
-                        <Ionicons name="checkmark-circle" size={14} color="#10B981" />
+                        <Ionicons name="checkmark-circle" size={14} color="#FFB547" />
                         <Text style={styles.ingName}>{ing.name} ({ing.portion})</Text>
                         <Text style={styles.ingKcal}>~{ing.calories} kcal</Text>
                       </View>
@@ -322,7 +322,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
                 {result.insights && result.insights.length > 0 && (
                   <View style={styles.insightsBox}>
                     <View style={styles.insightsHeader}>
-                      <Ionicons name="bulb-outline" size={14} color="#A78BFA" />
+                      <Ionicons name="bulb-outline" size={14} color="#C59BFF" />
                       <Text style={styles.insightsTitle}>AI Nutritional Insights</Text>
                     </View>
                     {result.insights.map((ins, i) => (
@@ -337,7 +337,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
                   onPress={handleLogFood}
                   activeOpacity={0.8}
                 >
-                  <Ionicons name="checkmark-circle" size={18} color="#FFFFFF" />
+                  <Ionicons name="checkmark-circle" size={18} color="#24160C" />
                   <Text style={styles.confirmLogText}>
                     Log to {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} ({Math.round(result.estimatedCalories * servingMultiplier)} kcal)
                   </Text>
@@ -354,7 +354,7 @@ export const AIFoodScannerModal: React.FC<AIFoodScannerModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(10, 6, 14, 0.8)',
     justifyContent: 'flex-end',
   },
   modalSheet: {
@@ -384,17 +384,17 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 12,
-    backgroundColor: 'rgba(167, 139, 250, 0.15)',
+    backgroundColor: 'rgba(197, 155, 255, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   sheetTitle: {
     fontSize: 17,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   sheetSubtitle: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 1,
   },
@@ -420,11 +420,11 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: 'rgba(118, 185, 0, 0.3)',
+    borderColor: 'rgba(197, 155, 255, 0.3)',
   },
   nvidiaStatusText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     flex: 1,
   },
@@ -443,16 +443,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.cardBorder,
   },
   catChipActive: {
-    backgroundColor: 'rgba(167, 139, 250, 0.2)',
-    borderColor: '#A78BFA',
+    backgroundColor: 'rgba(197, 155, 255, 0.2)',
+    borderColor: '#C59BFF',
   },
   catChipText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   catChipTextActive: {
-    color: '#A78BFA',
+    color: '#C59BFF',
   },
   inputCard: {
     backgroundColor: Colors.dark.card,
@@ -470,7 +470,7 @@ const styles = StyleSheet.create({
   },
   inputHeaderTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   textInput: {
@@ -478,7 +478,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     color: Colors.dark.textPrimary,
-    fontSize: 14,
+    fontSize: 14, fontFamily: Fonts.regular,
     minHeight: 70,
     textAlignVertical: 'top',
     borderWidth: 1,
@@ -488,7 +488,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#7C3AED',
+    backgroundColor: '#8A5CF0',
     borderRadius: 12,
     paddingVertical: 12,
     marginTop: 10,
@@ -499,22 +499,22 @@ const styles = StyleSheet.create({
   },
   analyzeActionText: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: '#FFFFFF',
   },
   errorBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+    backgroundColor: 'rgba(255, 111, 97, 0.15)',
     padding: 10,
     borderRadius: 12,
     gap: 8,
     marginBottom: 14,
   },
   errorText: {
-    color: '#F87171',
+    color: '#FF8A7A',
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     flex: 1,
   },
   presetsSection: {
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
   },
   presetsTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginBottom: 10,
   },
@@ -546,14 +546,14 @@ const styles = StyleSheet.create({
   },
   presetCardTitle: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textPrimary,
     lineHeight: 14,
   },
   presetKcal: {
     fontSize: 11,
-    fontWeight: '800',
-    color: '#10B981',
+    fontFamily: Fonts.extrabold,
+    color: '#FFB547',
     marginTop: 4,
   },
   resultCard: {
@@ -561,7 +561,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 16,
     borderWidth: 1.5,
-    borderColor: '#7C3AED',
+    borderColor: '#8A5CF0',
     marginTop: 4,
   },
   resultHeader: {
@@ -576,25 +576,25 @@ const styles = StyleSheet.create({
   },
   resultFoodName: {
     fontSize: 17,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
     flex: 1,
   },
   healthBadge: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.3)',
+    borderColor: 'rgba(255, 181, 71, 0.3)',
   },
   healthBadgeText: {
-    color: '#10B981',
+    color: '#FFB547',
     fontSize: 11,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
   },
   resultDesc: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textSecondary,
     marginTop: 4,
   },
@@ -613,16 +613,16 @@ const styles = StyleSheet.create({
   },
   macroPillKcal: {
     fontSize: 16,
-    fontWeight: '900',
-    color: '#10B981',
+    fontFamily: Fonts.black,
+    color: '#FFB547',
   },
   macroPillValue: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
   },
   macroPillLabel: {
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
     marginTop: 1,
   },
@@ -637,7 +637,7 @@ const styles = StyleSheet.create({
   },
   portionLabel: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   portionButtons: {
@@ -651,11 +651,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.inputBg,
   },
   multiplierBtnActive: {
-    backgroundColor: '#7C3AED',
+    backgroundColor: '#8A5CF0',
   },
   multiplierBtnText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
   },
   multiplierBtnTextActive: {
@@ -669,7 +669,7 @@ const styles = StyleSheet.create({
   },
   ingredientsTitle: {
     fontSize: 11,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textSecondary,
     marginBottom: 6,
     textTransform: 'uppercase',
@@ -682,22 +682,22 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   ingName: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textPrimary,
     flex: 1,
   },
   ingKcal: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
   },
   insightsBox: {
-    backgroundColor: 'rgba(167, 139, 250, 0.08)',
+    backgroundColor: 'rgba(197, 155, 255, 0.08)',
     borderRadius: 12,
     padding: 10,
     marginBottom: 14,
     borderWidth: 1,
-    borderColor: 'rgba(167, 139, 250, 0.2)',
+    borderColor: 'rgba(197, 155, 255, 0.2)',
   },
   insightsHeader: {
     flexDirection: 'row',
@@ -707,11 +707,11 @@ const styles = StyleSheet.create({
   },
   insightsTitle: {
     fontSize: 11,
-    fontWeight: '800',
-    color: '#A78BFA',
+    fontFamily: Fonts.extrabold,
+    color: '#C59BFF',
   },
   insightText: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textSecondary,
     lineHeight: 16,
   },
@@ -719,14 +719,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
     borderRadius: 14,
     paddingVertical: 14,
     gap: 8,
   },
   confirmLogText: {
     fontSize: 14,
-    fontWeight: '800',
-    color: '#FFFFFF',
+    fontFamily: Fonts.extrabold,
+    color: '#24160C',
   },
 });

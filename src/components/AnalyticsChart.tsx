@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors, MACRO_COLORS } from '../constants/theme';
+import { Colors, MACRO_COLORS, Fonts } from '../constants/theme';
 import { DayLog, UserProfile, WeightEntry } from '../types';
 import { formatDayOfWeek, parseISODate } from '../utils/dateUtils';
 
@@ -30,7 +30,7 @@ export const AnalyticsChart: React.FC<AnalyticsChartProps> = ({
   const chartData = pastDays.map((dateStr) => {
     const log = dayLogs[dateStr];
     const totalKcal = log
-      ? log.foods.reduce((sum, f) => sum + f.calories * f.servings, 0)
+      ? Math.round(log.foods.reduce((sum, f) => sum + f.calories * f.servings, 0))
       : 0;
     const protein = log
       ? log.foods.reduce((sum, f) => sum + f.proteinG * f.servings, 0)
@@ -84,7 +84,7 @@ export const AnalyticsChart: React.FC<AnalyticsChartProps> = ({
           <View>
             <Text style={styles.cardTitle}>Calorie Intake History</Text>
             <Text style={styles.cardSubtitle}>
-              Target: <Text style={{ color: '#10B981', fontWeight: '700' }}>{targetKcal} kcal</Text>
+              Target: <Text style={{ color: '#FFB547', fontFamily: Fonts.bold }}>{targetKcal} kcal</Text>
             </Text>
           </View>
           <View style={styles.avgBadge}>
@@ -114,9 +114,9 @@ export const AnalyticsChart: React.FC<AnalyticsChartProps> = ({
               const isOver = item.totalKcal > targetKcal + 100;
               const isOnTarget = Math.abs(item.totalKcal - targetKcal) <= targetKcal * 0.15;
 
-              let barColor = '#10B981';
-              if (isOver) barColor = '#EF4444';
-              else if (!isOnTarget && item.totalKcal > 0) barColor = '#F59E0B';
+              let barColor = '#9ED36A';
+              if (isOver) barColor = '#FF6F61';
+              else if (!isOnTarget && item.totalKcal > 0) barColor = '#FFB547';
 
               return (
                 <TouchableOpacity
@@ -158,15 +158,15 @@ export const AnalyticsChart: React.FC<AnalyticsChartProps> = ({
         {/* Legend */}
         <View style={styles.legendRow}>
           <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#10B981' }]} />
+            <View style={[styles.legendDot, { backgroundColor: '#9ED36A' }]} />
             <Text style={styles.legendText}>On Target (±15%)</Text>
           </View>
           <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#F59E0B' }]} />
+            <View style={[styles.legendDot, { backgroundColor: '#FFB547' }]} />
             <Text style={styles.legendText}>Under Budget</Text>
           </View>
           <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#EF4444' }]} />
+            <View style={[styles.legendDot, { backgroundColor: '#FF6F61' }]} />
             <Text style={styles.legendText}>Over Budget</Text>
           </View>
         </View>
@@ -208,7 +208,7 @@ export const AnalyticsChart: React.FC<AnalyticsChartProps> = ({
             <View>
               <Text style={styles.cardTitle}>Weight Trend Progression</Text>
               <Text style={styles.cardSubtitle}>
-                Current: <Text style={{ color: '#F8FAFC', fontWeight: '800' }}>{weights[0]?.weightKg || profile.currentWeightKg} kg</Text> • Goal: {profile.targetWeightKg} kg
+                Current: <Text style={{ color: '#FBF3EA', fontFamily: Fonts.extrabold }}>{weights[0]?.weightKg || profile.currentWeightKg} kg</Text> • Goal: {profile.targetWeightKg} kg
               </Text>
             </View>
             <View style={styles.goalDeltaPill}>
@@ -257,11 +257,11 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: Fonts.extrabold,
     color: Colors.dark.textPrimary,
   },
   cardSubtitle: {
-    fontSize: 12,
+    fontSize: 12, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 2,
   },
@@ -270,13 +270,13 @@ const styles = StyleSheet.create({
   },
   avgBadgeLabel: {
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
     color: Colors.dark.textMuted,
   },
   avgBadgeValue: {
     fontSize: 14,
-    fontWeight: '800',
-    color: '#10B981',
+    fontFamily: Fonts.extrabold,
+    color: '#FFB547',
   },
   chartContainer: {
     height: 170,
@@ -296,13 +296,13 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 1,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.4)',
+    borderColor: 'rgba(255, 181, 71, 0.4)',
     borderStyle: 'dashed',
   },
   targetLineLabel: {
     fontSize: 9,
-    fontWeight: '800',
-    color: '#10B981',
+    fontFamily: Fonts.extrabold,
+    color: '#FFB547',
     marginLeft: 4,
   },
   barsRow: {
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
   },
   barValueText: {
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
     marginBottom: 4,
   },
@@ -338,13 +338,13 @@ const styles = StyleSheet.create({
   },
   barDayLabel: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textMuted,
     marginTop: 6,
   },
   barDayLabelSelected: {
     color: '#FFFFFF',
-    fontWeight: '900',
+    fontFamily: Fonts.black,
   },
   legendRow: {
     flexDirection: 'row',
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
   legendText: {
     fontSize: 10,
     color: Colors.dark.textMuted,
-    fontWeight: '600',
+    fontFamily: Fonts.semibold,
   },
   macroAvgRow: {
     flexDirection: 'row',
@@ -384,33 +384,33 @@ const styles = StyleSheet.create({
   },
   macroAvgVal: {
     fontSize: 16,
-    fontWeight: '900',
+    fontFamily: Fonts.black,
     color: Colors.dark.textPrimary,
     marginTop: 6,
   },
   macroAvgName: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textSecondary,
     marginTop: 2,
   },
   macroAvgGoal: {
-    fontSize: 9,
+    fontSize: 9, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
     marginTop: 4,
   },
   goalDeltaPill: {
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+    backgroundColor: 'rgba(255, 181, 71, 0.15)',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.3)',
+    borderColor: 'rgba(255, 181, 71, 0.3)',
   },
   goalDeltaText: {
     fontSize: 11,
-    fontWeight: '800',
-    color: '#10B981',
+    fontFamily: Fonts.extrabold,
+    color: '#FFB547',
   },
   weightTimeline: {
     gap: 8,
@@ -433,20 +433,20 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#10B981',
+    backgroundColor: '#FFB547',
   },
   weightDate: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: Colors.dark.textPrimary,
   },
   weightNotes: {
-    fontSize: 11,
+    fontSize: 11, fontFamily: Fonts.regular,
     color: Colors.dark.textMuted,
   },
   weightKgText: {
     fontSize: 14,
-    fontWeight: '800',
-    color: '#F8FAFC',
+    fontFamily: Fonts.extrabold,
+    color: '#FBF3EA',
   },
 });
