@@ -2,6 +2,8 @@
 
 A cross-platform calorie, macro and fitness tracker built with **Expo + React Native + TypeScript**. Runs on Android, iOS and the web from one codebase, with an optional AI food scanner and coach powered by NVIDIA Nemotron.
 
+**Live website: [nutripulse-chi.vercel.app](https://nutripulse-chi.vercel.app)**. Your data stays in your browser. No account needed.
+
 ![NutriPulse on desktop](screenshots/desktop.png)
 
 <p align="center">
@@ -47,6 +49,19 @@ npm run ios       # iOS simulator / Expo Go
 ### AI setup (optional)
 
 Get a free API key at [build.nvidia.com](https://build.nvidia.com) and paste it into the app when prompted. The key is stored only on your device. You can also tap **Continue with Local Analysis** to use the app without a key.
+
+On the website, AI requests go through `api/nvidia.js`, a small Vercel function that forwards your key to NVIDIA (browsers can't call NVIDIA's API directly). It never stores or logs the key.
+
+### Deploying the website
+
+Pushes to `main` deploy automatically to Vercel. To build it yourself:
+
+```bash
+npx expo export -p web   # static site in dist/
+npx expo serve           # preview it locally
+```
+
+`vercel.json` holds the build settings and the rule that sends every page route to the app.
 
 ## Project structure
 
