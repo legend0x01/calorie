@@ -42,20 +42,22 @@ export async function saveBackendUserData(
   }
 ): Promise<void> {
   try {
-    const writes: [string, string][] = [];
+    const writes: Record<string, string> = {};
 
     if (data.profile) {
-      writes.push([getUserStorageKey(userId, 'profile'), JSON.stringify(data.profile)]);
+      writes[getUserStorageKey(userId, 'profile')] = JSON.stringify(data.profile);
     }
     if (data.dayLogs) {
-      writes.push([getUserStorageKey(userId, 'day_logs'), JSON.stringify(data.dayLogs)]);
+      writes[getUserStorageKey(userId, 'day_logs')] = JSON.stringify(data.dayLogs);
     }
     if (data.weightHistory) {
-      writes.push([getUserStorageKey(userId, 'weights'), JSON.stringify(data.weightHistory)]);
+      writes[getUserStorageKey(userId, 'weights')] = JSON.stringify(data.weightHistory);
     }
 
-    if (writes.length > 0) {
-      await AsyncStorage.multiSet(writes);
+    // AsyncStorage v3 removed multiSet(pairs) in favour of setMany(record).
+    // Calling multiSet threw "is not a function", so nothing was ever saved.
+    if (Object.keys(writes).length > 0) {
+      await AsyncStorage.setMany(writes);
     }
   } catch (e) {
     console.error('Failed to save user data to backend storage:', e);

@@ -1,9 +1,12 @@
 {
-  "buildCommand": null,
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci",
+  "buildCommand": "npx expo export -p web",
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/((?!_expo|assets|.*\\..*).*)",
+      "source": "/((?!_expo|assets|api/|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

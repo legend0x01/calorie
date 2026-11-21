@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { AIAnalysisResult, AIChatMessage, FoodItem, MealCategory, UserProfile } from '../types';
 
 interface AIRequestOptions {
@@ -294,16 +295,78 @@ export function parseFoodLocally(prompt: string): AIAnalysisResult {
   };
 }
 
+// ---------------------------------------------------------------------------
+// NVIDIA chat completions
+//
+// - Browsers cannot call integrate.api.nvidia.com directly: it sends no CORS
+//   headers, so the request is blocked. On web we go through our own
+//   same-origin Vercel function (api/nvidia.js), which forwards the user's key.
+//   Native apps are not subject to CORS and call NVIDIA directly.
+// - NVIDIA retires hosted models (llama-3.1-nemotron-70b-instruct, which this
+//   app originally used, now returns 404). We try current models in order and
+//   move on only when a model is missing, so one retirement degrades quietly
+//   instead of silently disabling NVIDIA for every user.
+// ---------------------------------------------------------------------------
+const NVIDIA_DIRECT_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
+const NVIDIA_ENDPOINT = Platform.OS === 'web' ? '/api/nvidia' : NVIDIA_DIRECT_URL;
+
+export const NVIDIA_MODELS = [
+  'nvidia/nemotron-3.5-lightning-30b-a3b',
+  'nvidia/nemotron-3-ultra-550b-a55b',
+  'google/gemma-4-31b-it',
+];
+
+type ChatMessage = { role: 'system' | 'user' | 'assistant'; content: string };
+
+async function nvidiaChat(
+  apiKey: string,
+  request: { messages: ChatMessage[]; temperature: number; max_tokens: number; top_p?: number },
+  timeoutMs: number
+): Promise<string> {
+  let lastError = 'No NVIDIA model available';
+
+  for (const model of NVIDIA_MODELS) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(NVIDIA_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey.trim()}`,
+        },
+        body: JSON.stringify({ model, ...request }),
+        signal: controller.signal,
+      });
+
+      if (res.status === 404) {
+        lastError = `Model ${model} is not available (404)`;
+        continue; // retired or unknown model: try the next one
+      }
+      if (!res.ok) {
+        // Bad key, rate limit, server error: another model will not fix it.
+        throw new Error(`NVIDIA API Error (${res.status}): ${(await res.text()).slice(0, 300)}`);
+      }
+
+      const data = await res.json();
+      const content: string = data?.choices?.[0]?.message?.content || '';
+      // Reasoning models may prefix their answer with a <think> block.
+      return content.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  throw new Error(lastError);
+}
+
 // Call NVIDIA Nemotron API endpoint
 async function analyzeWithNvidiaNemotron(
   prompt: string,
   mealCat: MealCategory,
   nvidiaApiKey: string
 ): Promise<AIAnalysisResult> {
-  const endpoint = 'https://integrate.api.nvidia.com/v1/chat/completions';
-
   const body = {
-    model: 'nvidia/llama-3.1-nemotron-70b-instruct',
     messages: [
       {
         role: 'system',
@@ -313,34 +376,13 @@ async function analyzeWithNvidiaNemotron(
         role: 'user',
         content: `Analyze this item for food calorie estimation: "${prompt}" (Category: ${mealCat})`,
       },
-    ],
+    ] as ChatMessage[],
     temperature: 0.1,
     top_p: 0.7,
     max_tokens: 1024,
   };
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 12000);
-
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${nvidiaApiKey}`,
-    },
-    body: JSON.stringify(body),
-    signal: controller.signal,
-  });
-
-  clearTimeout(timeoutId);
-
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`NVIDIA API Error (${res.status}): ${errText}`);
-  }
-
-  const data = await res.json();
-  const responseContent = data?.choices?.[0]?.message?.content || '';
+  const responseContent = await nvidiaChat(nvidiaApiKey, body, 12000);
 
   const jsonMatch = responseContent.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
@@ -532,42 +574,20 @@ Provide a concise, practical, motivating answer (2-4 paragraphs). Include realis
 
   if (nvidiaApiKey && nvidiaApiKey.trim().length > 0) {
     try {
-      const endpoint = 'https://integrate.api.nvidia.com/v1/chat/completions';
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${nvidiaApiKey.trim()}`,
-        },
-        body: JSON.stringify({
-          model: 'nvidia/llama-3.1-nemotron-70b-instruct',
+      const reply = await nvidiaChat(
+        nvidiaApiKey,
+        {
           messages: [
-            {
-              role: 'system',
-              content: 'You are a strict Food & Calorie Coach AI Brain.',
-            },
-            {
-              role: 'user',
-              content: coachPrompt,
-            },
+            { role: 'system', content: 'You are a strict Food & Calorie Coach AI Brain.' },
+            { role: 'user', content: coachPrompt },
           ],
           temperature: 0.3,
           max_tokens: 512,
-        }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      if (res.ok) {
-        const data = await res.json();
-        const reply = data?.choices?.[0]?.message?.content;
-        if (reply && reply.trim().length > 10) {
-          return reply.trim();
-        }
+        },
+        10000
+      );
+      if (reply.length > 10) {
+        return reply;
       }
     } catch (e) {
       console.warn('NVIDIA Coach call error, using fallback:', e);

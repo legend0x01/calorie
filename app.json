@@ -19,7 +19,13 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "NutriPulse — AI Calorie & Nutrition Tracker",
+      "shortName": "NutriPulse",
+      "description": "Track calories, macros, water, exercise and weight, with an AI food scanner and coach.",
+      "themeColor": "#10B981",
+      "backgroundColor": "#ffffff",
+      "output": "single"
     },
     "extra": {
       "eas": {
